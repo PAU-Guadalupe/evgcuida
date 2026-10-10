@@ -50,6 +50,10 @@
   #splash a { color: #fff; background: rgba(255,255,255,.15); padding: 12px 20px; border-radius: 12px; text-decoration: none; font-weight: 600; }
   @keyframes g { to { transform: rotate(360deg); } }
   body.launching #splash { display: flex; }
+  .qrwrap { display: flex; gap: 18px; align-items: center; }
+  #qr { flex: none; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 8px; line-height: 0; }
+  #qr svg { width: 180px; height: 180px; display: block; }
+  @media (max-width: 480px) { .qrwrap { flex-direction: column; text-align: center; } }
 </style>
 </head>
 <body>
@@ -116,6 +120,18 @@
     </details>
   </div>
 
+  <div class="card" id="qrCard">
+    <h2>🔗 Compártela con un código QR</h2>
+    <div class="qrwrap">
+      <div id="qr" role="img" aria-label="Código QR de esta página"></div>
+      <div>
+        <p style="margin:0 0 8px">Escanea este código con la cámara del móvil para abrir esta página e <b>instalar EVGCuida</b>.</p>
+        <p class="hint" style="margin:0 0 10px;word-break:break-all" id="qrUrl"></p>
+        <a class="btn alt" id="qrDown" download="EVGCuida-QR.png" href="#" style="width:auto;display:inline-flex;padding:10px 16px;font-size:.95rem">⬇ Descargar el QR</a>
+      </div>
+    </div>
+  </div>
+
   <div class="card">
     <h2>❓ Si algo no funciona</h2>
     <p style="margin:0 0 8px"><b>Me dice «Acceso restringido».</b> Has entrado con una cuenta personal. Cambia a tu cuenta @fundacionloyola.es en Google y vuelve a entrar.</p>
@@ -126,6 +142,7 @@
 
 <footer>EVGCuida · Mantenimiento y Servicios · Escuela Virgen de Guadalupe · Jesuitas Fundación Loyola</footer>
 
+<script src="qrcode.js"></script>
 <script>
   // ======= Dirección de la aplicación web (Apps Script). Si cambia, se cambia solo aquí. =======
   var APP_URL = 'https://script.google.com/a/macros/fundacionloyola.es/s/AKfycby8JBXBV2BIcS2U_nZFND52XpAcG38BSpDCt23ipWtq7Fl-M7wsVuQRMlwIZpHVLAxE2w/exec';
@@ -168,6 +185,22 @@
     ['osPrompt', 'osAndroid', 'osIOS', 'osDesktop'].forEach(function (id) { document.getElementById(id).classList.remove('show'); });
     document.getElementById('already').style.display = 'block';
   });
+
+  // Código QR de esta página (para abrirla desde otro móvil o imprimirlo)
+  (function () {
+    var pageUrl = location.origin + location.pathname.replace(/index\.html$/, '');
+    document.getElementById('qrUrl').textContent = pageUrl;
+    if (typeof qrcode !== 'function') { document.getElementById('qrCard').style.display = 'none'; return; }
+    var q = qrcode(0, 'M'); q.addData(pageUrl); q.make();
+    document.getElementById('qr').innerHTML = q.createSvgTag({ cellSize: 6, margin: 2, scalable: true })
+      .replace(/fill="black"/g, 'fill="#003978"').replace(/fill="#000000"/g, 'fill="#003978"');
+    // PNG para descargar (para carteles o correos)
+    var n = q.getModuleCount(), cell = 16, m = 4 * cell, size = n * cell + 2 * m;
+    var c = document.createElement('canvas'); c.width = c.height = size;
+    var g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); g.fillStyle = '#003978';
+    for (var r = 0; r < n; r++) for (var k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect(m + k * cell, m + r * cell, cell, cell);
+    document.getElementById('qrDown').href = c.toDataURL('image/png');
+  })();
 
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
 </script>
