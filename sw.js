@@ -1,8 +1,8 @@
 // Service worker mínimo del lanzador de EVGCuida: guarda la portada y los iconos para que
 // el icono instalado abra al instante. La aplicación (Apps Script) nunca se guarda en caché.
-const CACHE = 'evgcuida-lanzador-v1';
+const CACHE = 'evgcuida-lanzador-v2';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png',
-  './maskable-512.png', './apple-touch-icon.png', './logo-evgcuida.png', './logo-escuela.png'];
+  './maskable-512.png', './apple-touch-icon.png', './logo-evgcuida.png', './logo-escuela.png', './qrcode.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
