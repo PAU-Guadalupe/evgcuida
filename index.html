@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EVGCuida · Mantenimiento y Servicios</title>
+<meta name="description" content="Acceso e instalación de EVGCuida, la aplicación de mantenimiento y servicios de la Escuela Virgen de Guadalupe.">
+<meta name="theme-color" content="#003978">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="EVGCuida">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+  :root { --brand:#003978; --brand2:#002a5a; --soft:#e6eef8; --gold:#f5b335; --text:#1d2433; --muted:#5f6b7d; --line:#dde3ea; --bg:#f4f6f9; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+  header { background: #fff; border-bottom: 4px solid var(--gold); padding: 14px 16px calc(14px); padding-top: max(14px, env(safe-area-inset-top)); }
+  .bar { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .bar img.app { height: 44px; } .bar img.esc { height: 46px; }
+  main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 22px 16px 28px; }
+  h1 { color: var(--brand); font-size: 1.55rem; margin: 0 0 4px; line-height: 1.2; }
+  .lead { color: var(--muted); margin: 0 0 20px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  .card h2 { font-size: 1.1rem; color: var(--brand); margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 0; border-radius: 12px; cursor: pointer;
+         padding: 15px 18px; font-family: inherit; font-weight: 700; font-size: 1.05rem; line-height: 1.2; text-decoration: none; transition: filter .15s; }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.main { background: var(--brand); color: #fff; font-size: 1.15rem; padding: 18px; }
+  .btn.alt { background: var(--soft); color: var(--brand); }
+  .btn img { width: 28px; height: 28px; border-radius: 7px; }
+  .hint { color: var(--muted); font-size: .9rem; margin: 10px 0 0; }
+  ol { margin: 6px 0 0; padding-left: 22px; } li { margin: 6px 0; }
+  .k { display: inline-block; background: var(--soft); color: var(--brand); border-radius: 6px; padding: 0 7px; font-weight: 600; white-space: nowrap; }
+  .os { display: none; } .show { display: block; }
+  details { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 10px; }
+  summary { cursor: pointer; color: var(--brand); font-weight: 600; }
+  .ok { background: #e7f4ec; color: #1c7c4a; border-radius: 10px; padding: 10px 12px; font-weight: 600; margin: 0; }
+  .note { background: #fff7e0; border: 1px solid #f0d79a; border-radius: 10px; padding: 10px 12px; font-size: .92rem; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 16px max(18px, env(safe-area-inset-bottom)); }
+  /* Pantalla al abrir desde el icono instalado */
+  #splash { position: fixed; inset: 0; background: var(--brand); color: #fff; display: none; flex-direction: column; align-items: center;
+            justify-content: center; gap: 18px; padding: 24px; text-align: center; z-index: 9; }
+  #splash img { width: 112px; height: 112px; border-radius: 26px; box-shadow: 0 8px 26px rgba(0,0,0,.3); }
+  #splash .spin { width: 34px; height: 34px; border: 4px solid rgba(255,255,255,.3); border-top-color: var(--gold); border-radius: 50%; animation: g 1s linear infinite; }
+  #splash a { color: #fff; background: rgba(255,255,255,.15); padding: 12px 20px; border-radius: 12px; text-decoration: none; font-weight: 600; }
+  @keyframes g { to { transform: rotate(360deg); } }
+  body.launching #splash { display: flex; }
+</style>
+</head>
+<body>
+<div id="splash" role="status">
+  <img src="icon-192.png" alt="">
+  <div style="font-size:1.3rem;font-weight:700">EVGCuida</div>
+  <div class="spin" aria-hidden="true"></div>
+  <div>Abriendo la aplicación…</div>
+  <a id="splashLink" href="#">Si no se abre, pulsa aquí</a>
+</div>
+
+<header><div class="bar">
+  <img class="app" src="logo-evgcuida.png" alt="EVGCuida · Mantenimiento y Servicios">
+  <img class="esc" src="logo-escuela.png" alt="Escuela Virgen de Guadalupe · Jesuitas Fundación Loyola">
+</div></header>
+
+<main>
+  <h1>EVGCuida · Mantenimiento y Servicios</h1>
+  <p class="lead">Comunica incidencias de mantenimiento y limpieza de la Escuela Virgen de Guadalupe. Entra con tu cuenta <b>@fundacionloyola.es</b>.</p>
+
+  <div class="card">
+    <a class="btn main" id="open" href="#"><img src="icon-192.png" alt="">Entrar en EVGCuida</a>
+    <p class="hint">Si Google te pide cuenta, elige siempre la de <b>@fundacionloyola.es</b>.</p>
+  </div>
+
+  <div class="card" id="install">
+    <h2>📱 Instálala en tu móvil</h2>
+    <p id="already" class="ok" style="display:none">✔ EVGCuida ya está instalada en este dispositivo. Ábrela desde su icono.</p>
+
+    <!-- Android / Chrome con instalación directa -->
+    <div class="os" id="osPrompt">
+      <button class="btn alt" id="btnInstall" type="button">⬇ Instalar EVGCuida</button>
+      <p class="hint">Aparecerá el icono de EVGCuida en la pantalla de inicio, como cualquier otra app.</p>
+    </div>
+
+    <!-- Android sin aviso de instalación -->
+    <div class="os" id="osAndroid">
+      <ol>
+        <li>Abre esta página en <b>Chrome</b>.</li>
+        <li>Pulsa el menú <span class="k">⋮</span> (arriba a la derecha).</li>
+        <li>Elige <span class="k">Instalar aplicación</span> o <span class="k">Añadir a pantalla de inicio</span> y confirma.</li>
+      </ol>
+    </div>
+
+    <!-- iPhone / iPad -->
+    <div class="os" id="osIOS">
+      <ol>
+        <li>Abre esta página en <b>Safari</b> (si estás en otra app, usa «Abrir en Safari»).</li>
+        <li>Pulsa el botón <span class="k">Compartir</span> <span aria-hidden="true">(cuadrado con flecha ↑)</span>.</li>
+        <li>Desliza hacia abajo y pulsa <span class="k">Añadir a pantalla de inicio</span>.</li>
+        <li>Pulsa <span class="k">Añadir</span>. El icono de EVGCuida aparece en tu pantalla de inicio.</li>
+      </ol>
+    </div>
+
+    <!-- Ordenador -->
+    <div class="os" id="osDesktop">
+      <p style="margin:0">Abre esta misma dirección en el móvil y sigue los pasos que aparecerán. En el ordenador puedes usar el botón <b>Entrar en EVGCuida</b> o guardarla en favoritos.</p>
+    </div>
+
+    <details>
+      <summary>Instrucciones para el otro tipo de móvil</summary>
+      <p style="margin:10px 0 0"><b>Android (Chrome):</b> menú <span class="k">⋮</span> → <span class="k">Instalar aplicación</span>.<br>
+      <b>iPhone/iPad (Safari):</b> <span class="k">Compartir</span> → <span class="k">Añadir a pantalla de inicio</span> → <span class="k">Añadir</span>.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>❓ Si algo no funciona</h2>
+    <p style="margin:0 0 8px"><b>Me dice «Acceso restringido».</b> Has entrado con una cuenta personal. Cambia a tu cuenta @fundacionloyola.es en Google y vuelve a entrar.</p>
+    <p style="margin:0 0 8px"><b>Tengo varias cuentas de Google.</b> Cuando Google pregunte, elige la de @fundacionloyola.es.</p>
+    <p style="margin:0"><b>¿Hay que actualizar la app?</b> No. Al abrirla se carga siempre la última versión.</p>
+  </div>
+</main>
+
+<footer>EVGCuida · Mantenimiento y Servicios · Escuela Virgen de Guadalupe · Jesuitas Fundación Loyola</footer>
+
+<script>
+  // ======= Dirección de la aplicación web (Apps Script). Si cambia, se cambia solo aquí. =======
+  var APP_URL = 'https://script.google.com/a/macros/fundacionloyola.es/s/AKfycby8JBXBV2BIcS2U_nZFND52XpAcG38BSpDCt23ipWtq7Fl-M7wsVuQRMlwIZpHVLAxE2w/exec';
+
+  // Si llega con ?inc=… o ?mej=… (enlaces de los correos), se pasan a la aplicación
+  var qs = new URLSearchParams(location.search), extra = new URLSearchParams();
+  ['inc', 'mej'].forEach(function (k) { if (qs.get(k)) extra.set(k, qs.get(k)); });
+  var target = APP_URL + (extra.toString() ? '?' + extra.toString() : '');
+  document.getElementById('open').href = target;
+  document.getElementById('splashLink').href = target;
+
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document);
+  var isAndroid = /Android/.test(ua);
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true || qs.get('source') === 'pwa';
+
+  // Abierta desde el icono instalado: entra directamente en EVGCuida
+  if (standalone) {
+    document.body.classList.add('launching');
+    setTimeout(function () { location.replace(target); }, 350);
+  }
+
+  function show(id) { document.getElementById(id).classList.add('show'); }
+  if (isIOS) show('osIOS'); else if (isAndroid) show('osAndroid'); else show('osDesktop');
+
+  // Android/Chrome/Edge: botón de instalación directa
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault(); deferred = e;
+    document.getElementById('osAndroid').classList.remove('show');
+    document.getElementById('osDesktop').classList.remove('show');
+    show('osPrompt');
+  });
+  document.getElementById('btnInstall').addEventListener('click', function () {
+    if (!deferred) return;
+    deferred.prompt();
+    deferred.userChoice.then(function () { deferred = null; });
+  });
+  window.addEventListener('appinstalled', function () {
+    ['osPrompt', 'osAndroid', 'osIOS', 'osDesktop'].forEach(function (id) { document.getElementById(id).classList.remove('show'); });
+    document.getElementById('already').style.display = 'block';
+  });
+
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
+</body>
+</html>
